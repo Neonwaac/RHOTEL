@@ -1,0 +1,32 @@
+.white-top-bar {
+    position: sticky;
+    z-index: 1;
+    width: 100vw;
+    height: 10vh;
+    background: white;
+    border-bottom: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+    display: flex;
+}
+.container{
+    width: 100vw;
+    display: flex;
+}
+.logo2-container{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+
+}
+.logo2{
+    width: 23vh;
+    height: 9vh;
+}
+.login{
+    font-weight: 500;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 50%;
+
+}

@@ -1,2 +1,0 @@
-# RHOTEL
-Hola papus
