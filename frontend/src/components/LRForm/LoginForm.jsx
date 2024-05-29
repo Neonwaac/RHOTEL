@@ -5,7 +5,7 @@ import companyLogo from '../assets/logo.png';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
-const URI = "http://localhost:8000/login";
+const URI = "http://localhost:8000/users/login";
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -15,10 +15,11 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Envía la solicitud de inicio de sesión al backend
             const response = await axios.post(URI, { username, password });
-            alert(response.data.message); // Muestra el mensaje de éxito del backend
-            navigate('/'); // Redirige a la página principal u otra página después de iniciar sesión
+            alert(response.data.message);
+            localStorage.setItem('token', response.data.token); // Guardar el token en localStorage
+            localStorage.setItem('username', response.data.username); // Guardar el nombre de usuario en localStorage
+            navigate('/');
         } catch (error) {
             alert(error.response ? error.response.data.message : 'Error de servidor');
         }
@@ -30,7 +31,7 @@ const LoginForm = () => {
                 <img src={companyLogo} className='logo' alt='Logo'/>
             </div>
             <form onSubmit={handleSubmit}>
-                <h1>Inicia Sesion</h1>
+                <h1>Inicia Sesión</h1>
                 <div className='input-box'>
                     <input
                         type='text'
@@ -51,9 +52,9 @@ const LoginForm = () => {
                     />
                     <FaLock className='icon'/>
                 </div>
-                <button type='submit'>Iniciar Sesion</button>
+                <button type='submit'>Iniciar Sesión</button>
                 <div className='register-link'>
-                    <p>No tienes una cuenta? <Link to='/register'>Registrate</Link></p>
+                    <p>No tienes una cuenta? <Link to='/register'>Regístrate</Link></p>
                 </div>
             </form>
         </div>
@@ -61,4 +62,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
