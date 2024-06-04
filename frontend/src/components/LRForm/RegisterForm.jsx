@@ -4,8 +4,8 @@ import { FaUser, FaLock, FaMailBulk, FaAddressCard, FaRegCalendar } from "react-
 import companyLogo from '../assets/logo.png';
 import axios from 'axios';
 import { useState } from 'react';
-import {Link} from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const URI = 'http://localhost:8000/users/';
 
@@ -21,20 +21,36 @@ const RegisterForm = () => {
     // Procedimiento para guardar
     const store = async (e) => {
         e.preventDefault();
-        await axios.post(URI, { 
-            users_name: name, 
-            users_lastname: lastName, 
-            users_email: email, 
-            users_birthdate: birthdate, 
-            users_password: password, 
-            users_username: username
-        });
-        navigate('/');
+        try {
+            const response = await axios.post(URI, { 
+                users_name: name, 
+                users_lastname: lastName, 
+                users_email: email, 
+                users_birthdate: birthdate, 
+                users_password: password, 
+                users_username: username
+            });
+            Swal.fire({
+                icon: 'success',
+                title: '¡Registro exitoso!',
+                text: 'Tu cuenta ha sido creada correctamente.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                navigate('/');
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response ? error.response.data.message : 'Error de servidor',
+                confirmButtonText: 'OK'
+            });
+        }
     };
 
     return (
         <div className='wrapper'>
-            <div className = "logo-container"><img src = {companyLogo} className = "logo"></img></div>
+            <div className='logo-container'><img src={companyLogo} className='logo' alt='Logo'/></div>
             <form onSubmit={store}>
                 <h1>Registrate</h1>
                 <div className='input-box'>
@@ -98,7 +114,7 @@ const RegisterForm = () => {
                 </div>
                 <button type="submit">Registrarse</button>
                 <div className="register-link">
-                    <p>Ya tienes una cuenta? <Link to ="/login">Inicia sesión</Link></p>
+                    <p>Ya tienes una cuenta? <Link to="/login">Inicia sesión</Link></p>
                 </div>
             </form>
         </div>
@@ -106,3 +122,4 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
+

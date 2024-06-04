@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import "./mainPage.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 import WhiteTopBar from "../WhiteTopBar/WhiteTopBar";
 
 const MainPage = () => {
@@ -67,27 +68,50 @@ const MainPage = () => {
 
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
-    const response = await fetch('http://localhost:8000/bookings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        bookings_amount: nights * selectedRoom.rooms_price,
-        bookings_nights: nights,
-        bookings_roomid: selectedRoom.rooms_id,
-        bookings_userid: userId,
-        bookings_roomtitle: selectedRoom.rooms_title
-      })
-    });
 
-    if (response.ok) {
-      closeModal();
-    } else {
-      alert('Error creating booking');
+    try {
+      const response = await fetch('http://localhost:8000/bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          bookings_amount: nights * selectedRoom.rooms_price,
+          bookings_nights: nights,
+          bookings_roomid: selectedRoom.rooms_id,
+          bookings_userid: userId,
+          bookings_roomtitle: selectedRoom.rooms_title
+        })
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: '¡Reserva exitosa!',
+          text: 'Tu reserva ha sido creada correctamente.',
+          confirmButtonText: 'OK'
+        });
+        closeModal();
+      } else {
+        const errorData = await response.json();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorData.message || 'Error creando la reserva. Inténtalo de nuevo.',
+          confirmButtonText: 'OK'
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error creando la reserva. Inténtalo de nuevo.',
+        confirmButtonText: 'OK'
+      });
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

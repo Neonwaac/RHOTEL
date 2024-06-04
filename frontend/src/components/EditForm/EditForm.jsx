@@ -3,6 +3,7 @@ import './EditForm.css';
 import { FaUser, FaMailBulk, FaAddressCard, FaRegCalendar } from "react-icons/fa";
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const URI = 'http://localhost:8000/users/';
 
@@ -42,9 +43,21 @@ const EditForm = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            navigate('/');
+            Swal.fire({
+                icon: 'success',
+                title: '¡Actualización exitosa!',
+                text: 'Tu perfil ha sido actualizado correctamente.',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                navigate('/');
+            });
         } catch (error) {
-            console.error('Error updating user:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response ? error.response.data.message : 'Error de servidor',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
@@ -62,7 +75,12 @@ const EditForm = () => {
             setEmail(userData.users_email);
             setBirthDate(userData.users_birthdate);
         } catch (error) {
-            console.error('Error fetching user data:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error fetching user data',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
@@ -80,7 +98,7 @@ const EditForm = () => {
                 <p>Cambia tu foto</p>
                 <div className='custom-input-file'>
                     <input
-                     className = "input-file"
+                        className="input-file"
                         type='file'
                         onChange={(e) => setProfileImage(e.target.files[0])}
                     />

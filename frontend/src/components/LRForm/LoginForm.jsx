@@ -4,6 +4,7 @@ import { FaUser, FaLock } from "react-icons/fa";
 import companyLogo from '../assets/logo.png';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const URI = "http://localhost:8000/users/login";
 
@@ -16,14 +17,25 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const response = await axios.post(URI, { username, password });
-            alert(response.data.message);
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('username', response.data.username);
-            localStorage.setItem('userId', response.data.id); // Guarda el userId en localStorage
-            localStorage.setItem('profileImage', response.data.profileImage)
-            navigate('/');
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: response.data.message,
+                confirmButtonText: 'OK'
+            }).then(() => {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('username', response.data.username);
+                localStorage.setItem('userId', response.data.id); // Save the userId in localStorage
+                localStorage.setItem('profileImage', response.data.profileImage);
+                navigate('/');
+            });
         } catch (error) {
-            alert(error.response ? error.response.data.message : 'Error de servidor');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.response ? error.response.data.message : 'Error de servidor',
+                confirmButtonText: 'OK'
+            });
         }
     };
 
