@@ -17,30 +17,33 @@ body {
   background-size: cover;
   background-position: center;
   animation-timing-function: ease-in-out;
-  animation: backgroundChange 15s infinite;
+  animation: backgroundChange 30s infinite;
   backdrop-filter: blur(5px)
 }
 
 @keyframes backgroundChange {
-  0% {
-    background: url(./components/assets/hotel1.jpg) no-repeat center center/cover;
+  12.5%{
+    background-image: url(./components/assets/hotel1.jpg);
   }
-  25% {
-    background: url(./components/assets/hotel1.jpg) no-repeat center center/cover;
+  25%{
+    background-image: url(./components/assets/hotel2.jpg);
   }
-  33% {
-    background: url(./components/assets/hotel2.jpg) no-repeat center center/cover;
+  37.5%{
+    background-image: url(./components/assets/hotel3.jpg);
   }
-  58% {
-    background: url(./components/assets/hotel2.jpg) no-repeat center center/cover;
+  50%{
+    background-image: url(./components/assets/hotel4.jpg);
   }
-  66% {
-    background: url(./components/assets/hotel3.jpg) no-repeat center center/cover;
+  62.5%{
+    background-image: url(./components/assets/hotel5.jpg);
   }
-  91% {
-    background: url(./components/assets/hotel3.jpg) no-repeat center center/cover;
+  75%{
+    background-image: url(./components/assets/hotel6.jpg);
   }
-  100% {
-    background: url(./components/assets/hotel4.jpg) no-repeat center center/cover;
+  87.5%{
+    background-image: url(./components/assets/hotel7.jpg);
+  }
+  100%{
+    background-image: url(./components/assets/hotel8.jpg);
   }
 }

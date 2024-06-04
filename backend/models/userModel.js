@@ -42,6 +42,11 @@ const UserModel = db.define('users', {
     users_date: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
+    },
+    users_profile_image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: '/uploads/profile.png'
     }
 }, {
     timestamps: false,
@@ -49,3 +54,4 @@ const UserModel = db.define('users', {
 });
 
 export default UserModel;
+

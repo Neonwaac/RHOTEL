@@ -1,0 +1,111 @@
+.wrapper-edit {
+    min-width: 520px;
+    background: white;
+    border: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    color: #333333;
+    padding: 30px 40px;
+    float: left; 
+    margin-right: 20px;
+}
+
+.wrapper-edit h1 {
+    margin-bottom: 40px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.wrapper-edit .input-edit {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+}
+
+.input-edit input[type="text"],
+.input-edit input[type="date"],
+.input-edit input[type="file"] {
+    width: 100%; /* Ocupa todo el espacio disponible */
+    height: 100%;
+    padding: 0 10px;
+    margin-right: 10px;
+}
+
+.input-edit .icon {
+    position: absolute;
+    right: 60px; /* Espacio para el botón de editar */
+}
+
+.confirm {
+    width: 80px;
+    height: 40px;
+    background: #333;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    position: absolute;
+    right: 0;
+}
+
+.update {
+    width: 100%;
+    height: 40px;
+    background: #333;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.custom-input-file {
+    margin: 20px;
+    background: url("../assets/upload.png") no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 auto 0;
+    min-height: 15px;
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border: 10px solid rgb(25,52,82);
+    border-radius: 50%;
+}
+
+.custom-input-file .input-file {
+    border: 10000px solid transparent;
+    cursor: pointer;
+    font-size: 10000px;
+    margin: 0;
+    opacity: 0;
+    outline: 0 none;
+    padding: 0;
+    position: absolute;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 600px) {
+    .wrapper-edit {
+        min-width: 420px;
+        padding: 20px;
+    }
+}

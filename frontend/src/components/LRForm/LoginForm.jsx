@@ -17,8 +17,10 @@ const LoginForm = () => {
         try {
             const response = await axios.post(URI, { username, password });
             alert(response.data.message);
-            localStorage.setItem('token', response.data.token); // Guardar el token en localStorage
-            localStorage.setItem('username', response.data.username); // Guardar el nombre de usuario en localStorage
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('username', response.data.username);
+            localStorage.setItem('userId', response.data.id); // Guarda el userId en localStorage
+            localStorage.setItem('profileImage', response.data.profileImage)
             navigate('/');
         } catch (error) {
             alert(error.response ? error.response.data.message : 'Error de servidor');
@@ -62,3 +64,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+

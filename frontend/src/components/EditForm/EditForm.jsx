@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EditForm.css';
-import { FaUser, FaLock, FaMailBulk, FaAddressCard, FaRegCalendar } from "react-icons/fa";
+import { FaUser, FaMailBulk, FaAddressCard, FaRegCalendar } from "react-icons/fa";
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -12,21 +12,35 @@ const EditForm = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [birthdate, setBirthDate] = useState('');
-    const [password, setPassword] = useState('');
+    const [profileImage, setProfileImage] = useState(null);
+    const [isEditing, setIsEditing] = useState({
+        username: false,
+        name: false,
+        lastName: false,
+        email: false,
+        birthdate: false
+    });
+
     const navigate = useNavigate();
     const { id } = useParams();
 
-    // Procedimiento para guardar
     const update = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('users_name', name);
+        formData.append('users_lastname', lastName);
+        formData.append('users_email', email);
+        formData.append('users_birthdate', birthdate);
+        formData.append('users_username', username);
+        if (profileImage) {
+            formData.append('profileImage', profileImage);
+        }
+
         try {
-            await axios.put(`${URI}${id}`, {
-                users_name: name,
-                users_lastname: lastName,
-                users_email: email,
-                users_birthdate: birthdate,
-                users_password: password,
-                users_username: username
+            await axios.put(`${URI}${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             navigate('/');
         } catch (error) {
@@ -47,76 +61,105 @@ const EditForm = () => {
             setLastName(userData.users_lastname);
             setEmail(userData.users_email);
             setBirthDate(userData.users_birthdate);
-            setPassword(userData.users_password);
         } catch (error) {
             console.error('Error fetching user data:', error);
         }
     };
 
+    const toggleEdit = (field) => {
+        setIsEditing((prevState) => ({
+            ...prevState,
+            [field]: !prevState[field]
+        }));
+    };
+
     return (
-        <div className='wrapper'>
-            <form onSubmit={update}>
+        <div className='wrapper-edit'>
+            <form onSubmit={update} encType="multipart/form-data">
                 <h1>Edita tu Perfil</h1>
-                <div className='input-box'>
+                <p>Cambia tu foto</p>
+                <div className='custom-input-file'>
+                    <input
+                     className = "input-file"
+                        type='file'
+                        onChange={(e) => setProfileImage(e.target.files[0])}
+                    />
+                </div>
+                <p>Username</p>
+                <div className='input-edit'>
+                    <FaUser className='icon' />
                     <input
                         type='text'
                         placeholder='Nombre de usuario'
                         required
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        disabled={!isEditing.username}
                     />
-                    <FaUser className='icon' />
+                    <button className="confirm" type="button" onClick={() => toggleEdit('username')}>
+                        {isEditing.username ? 'Guardar' : 'Editar'}
+                    </button>
                 </div>
-                <div className='input-box'>
+                <p>Nombres</p>
+                <div className='input-edit'>
+                    <FaAddressCard className='icon' />
                     <input
                         type='text'
                         placeholder='Nombres'
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        disabled={!isEditing.name}
                     />
-                    <FaAddressCard className='icon' />
+                    <button className="confirm" type="button" onClick={() => toggleEdit('name')}>
+                        {isEditing.name ? 'Guardar' : 'Editar'}
+                    </button>
                 </div>
-                <div className='input-box'>
+                <p>Apellidos</p>
+                <div className='input-edit'>
+                    <FaAddressCard className='icon' />
                     <input
                         type='text'
                         placeholder='Apellidos'
                         required
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
+                        disabled={!isEditing.lastName}
                     />
-                    <FaAddressCard className='icon' />
+                    <button className="confirm" type="button" onClick={() => toggleEdit('lastName')}>
+                        {isEditing.lastName ? 'Guardar' : 'Editar'}
+                    </button>
                 </div>
-                <div className='input-box'>
+                <p>Correo</p>
+                <div className='input-edit'>
+                    <FaMailBulk className='icon' />
                     <input
                         type='text'
                         placeholder='Email'
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        disabled={!isEditing.email}
                     />
-                    <FaMailBulk className='icon' />
+                    <button className="confirm" type="button" onClick={() => toggleEdit('email')}>
+                        {isEditing.email ? 'Guardar' : 'Editar'}
+                    </button>
                 </div>
-                <div className='input-box'>
+                <p>Fecha de Nacimiento</p>
+                <div className='input-edit'>
+                    <FaRegCalendar className='icon' />
                     <input
                         type='date'
                         required
                         value={birthdate}
                         onChange={(e) => setBirthDate(e.target.value)}
+                        disabled={!isEditing.birthdate}
                     />
-                    <FaRegCalendar className='icon' />
+                    <button className="confirm" type="button" onClick={() => toggleEdit('birthdate')}>
+                        {isEditing.birthdate ? 'Guardar' : 'Editar'}
+                    </button>
                 </div>
-                <div className='input-box'>
-                    <input
-                        type='password'
-                        placeholder='Contraseña'
-                        required
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <FaLock className='icon' />
-                </div>
-                <button type="submit">Actualizar</button>
+                <button className="update" type="submit">Actualizar</button>
             </form>
         </div>
     );
