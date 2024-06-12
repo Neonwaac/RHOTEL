@@ -1,7 +1,9 @@
-// RoomModel.js
+// MODELO PARA LAS HABITACIONES EN LA BASE DE DATOS
+
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
+// DEFINE EL MODELO 'RoomsModel' PARA REPRESENTAR LAS HABITACIONES EN LA BASE DE DATOS
 const RoomsModel = db.define('rooms', {
     rooms_id: {
         type: DataTypes.INTEGER,
@@ -30,8 +32,9 @@ const RoomsModel = db.define('rooms', {
         allowNull: true
     }
 }, {
-    timestamps: false,
-    freezeTableName: true
+    timestamps: false, // DESACTIVA LOS TIMESTAMPS AUTOMÁTICOS
+    freezeTableName: true // PREVIENE LA MODIFICACIÓN DEL NOMBRE DE LA TABLA
 });
 
-export default RoomsModel;
+export default RoomsModel; // EXPORTA EL MODELO PARA SU USO EN OTROS ARCHIVOS
+

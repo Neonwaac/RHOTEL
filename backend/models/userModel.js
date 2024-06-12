@@ -1,6 +1,9 @@
+// MODELO PARA LOS USUARIOS EN LA BASE DE DATOS
+
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 
+// DEFINE EL MODELO 'UserModel' PARA REPRESENTAR LOS USUARIOS EN LA BASE DE DATOS
 const UserModel = db.define('users', {
     users_id: {
         type: DataTypes.INTEGER,
@@ -49,9 +52,8 @@ const UserModel = db.define('users', {
         defaultValue: '/uploads/profile.png'
     }
 }, {
-    timestamps: false,
-    freezeTableName: true
+    timestamps: false, // DESACTIVA LOS TIMESTAMPS AUTOMÁTICOS
+    freezeTableName: true // PREVIENE LA MODIFICACIÓN DEL NOMBRE DE LA TABLA
 });
 
-export default UserModel;
-
+export default UserModel; // EXPORTA EL MODELO PARA SU USO EN OTROS ARCHIVOS

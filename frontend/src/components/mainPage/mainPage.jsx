@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import "./mainPage.css";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import Swal from "sweetalert2";
 import WhiteTopBar from "../WhiteTopBar/WhiteTopBar";
 
@@ -19,6 +18,7 @@ const MainPage = () => {
   const [loading, setLoading] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  // useEffect: Carga datos del usuario y verifica la autenticación
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUsername = localStorage.getItem("username");
@@ -33,6 +33,7 @@ const MainPage = () => {
     }
   }, []);
 
+  // useEffect: Carga la lista de habitaciones disponibles
   useEffect(() => {
     fetch("http://localhost:8000/rooms")
       .then((response) => response.json())
@@ -40,6 +41,7 @@ const MainPage = () => {
       .catch((error) => console.error("Error fetching rooms:", error));
   }, []);
 
+  // handleLogout: Maneja el cierre de sesión del usuario
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -52,16 +54,19 @@ const MainPage = () => {
     navigate("/login");
   };
 
+  // openModal: Abre el modal para realizar una reserva
   const openModal = (room) => {
     setSelectedRoom(room);
     setModalIsOpen(true);
   };
 
+  // closeModal: Cierra el modal de reserva
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedRoom(null);
   };
 
+  // handleSubmit: Maneja el envío del formulario de reserva
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -114,6 +119,7 @@ const MainPage = () => {
     }
   };
 
+  // Renderiza la página principal con las habitaciones disponibles y el modal de reservas
   return (
     <div>
       <WhiteTopBar

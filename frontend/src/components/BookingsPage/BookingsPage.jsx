@@ -12,17 +12,20 @@ const BookingsPage = () => {
     const [bookings, setBookings] = useState([]);
     const navigate = useNavigate();
 
+    // useEffect: Maneja la carga inicial de datos del usuario y sus reservas
     useEffect(() => {
         const token = localStorage.getItem('token');
         const storedUsername = localStorage.getItem('username');
         const storedUserId = localStorage.getItem('userId');
         const storedProfileImage = localStorage.getItem('profileImage');
 
+        // Verifica si el usuario está autenticado
         if (!token || !storedUserId) {
             navigate('/login');
             return;
         }
 
+        // Si el usuario está autenticado, carga los datos del usuario
         if (token && storedUsername && storedUserId && storedProfileImage) {
             setIsLoggedIn(true);
             setUsername(storedUsername);
@@ -30,6 +33,7 @@ const BookingsPage = () => {
             setProfileImage(storedProfileImage);
         }
 
+        // Fetch: Obtiene las reservas del usuario desde el servidor
         fetch(`http://localhost:8000/bookings?userId=${storedUserId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -43,6 +47,7 @@ const BookingsPage = () => {
             .catch((error) => console.error('Error fetching bookings:', error));
     }, [navigate]);
 
+    // handleLogout: Maneja el cierre de sesión del usuario
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
@@ -54,6 +59,7 @@ const BookingsPage = () => {
         navigate("/login");
     };
 
+    // deleteBooking: Maneja la eliminación de una reserva
     const deleteBooking = async (bookingId) => {
         try {
             const token = localStorage.getItem('token');
@@ -80,6 +86,7 @@ const BookingsPage = () => {
         }
     };
 
+    // Renderiza la página de reservas, mostrando las reservas del usuario y opciones para gestionar las reservas
     return (
         <div>
             <WhiteTopBar
@@ -124,3 +131,4 @@ const BookingsPage = () => {
 };
 
 export default BookingsPage;
+

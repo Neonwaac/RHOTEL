@@ -25,6 +25,7 @@ const EditForm = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    // update: Maneja la actualización de los datos del perfil del usuario
     const update = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -61,10 +62,12 @@ const EditForm = () => {
         }
     };
 
+    // useEffect: Obtiene los datos del usuario por ID cuando se carga el componente
     useEffect(() => {
         getUserById();
     }, []);
 
+    // getUserById: Obtiene los datos del usuario por su ID desde el servidor
     const getUserById = async () => {
         try {
             const response = await axios.get(`${URI}${id}`);
@@ -84,6 +87,7 @@ const EditForm = () => {
         }
     };
 
+    // toggleEdit: Permite alternar entre el modo de edición y vista de los campos del formulario
     const toggleEdit = (field) => {
         setIsEditing((prevState) => ({
             ...prevState,
@@ -91,6 +95,7 @@ const EditForm = () => {
         }));
     };
 
+    // Renderiza el formulario de edición del perfil del usuario
     return (
         <div className='wrapper-edit'>
             <form onSubmit={update} encType="multipart/form-data">

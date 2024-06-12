@@ -1,6 +1,7 @@
+// CONTROLADOR PARA LAS RESERVAS
 import BookingsModel from "../models/BookingModel.js";
 import RoomsModel from "../models/RoomModel.js";
-
+// OBTENER TODAS LAS RESERVAS EN .../bookings - FORMATO JSON
 export const getAllBookings = async (req, res) => {
     const userId = req.query.userId;
     try {
@@ -16,7 +17,7 @@ export const getAllBookings = async (req, res) => {
         res.json({ message: error.message });
     }
 };
-
+// OBTENER UNA RESERVA EN ESPECIFICO POR ID EN .../bookings/:id - FORMATO JSON
 export const getBooking = async (req, res) => {
     try {
         const booking = await BookingsModel.findOne({
@@ -31,7 +32,7 @@ export const getBooking = async (req, res) => {
         res.json({ message: error.message });
     }
 };
-
+// CREAR UNA NUEVA RESERVA EN .../bookings - FORMATO JSON
 export const createBooking = async (req, res) => {
     try {
        await BookingsModel.create(req.body);
@@ -42,7 +43,7 @@ export const createBooking = async (req, res) => {
         res.json({ message: error.message });
     }
 };
-
+// ELIMINAR UNA RE SERVA DE .../bookings/:id - FORMATO JSON
 export const deleteBooking = async (req, res) => {
     try {
         await BookingsModel.destroy({ 

@@ -1,8 +1,10 @@
-// BookingModel.js
+// MODELO PARA LAS RESERVAS EN LA BASE DE DATOS
+
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
 import RoomsModel from "./RoomModel.js";
 
+// DEFINE EL MODELO 'BookingsModel' PARA REPRESENTAR LAS RESERVAS EN LA BASE DE DATOS
 const BookingsModel = db.define('bookings', {
     bookings_id: {
         type: DataTypes.INTEGER,
@@ -35,11 +37,13 @@ const BookingsModel = db.define('bookings', {
         defaultValue: DataTypes.NOW,
     }
 }, {
-    timestamps: false,
-    freezeTableName: true
+    timestamps: false, // DESACTIVA LOS TIMESTAMPS AUTOMÁTICOS
+    freezeTableName: true // PREVIENE LA MODIFICACIÓN DEL NOMBRE DE LA TABLA
 });
 
+// ESTABLECE LA RELACIÓN ENTRE LAS RESERVAS Y LAS HABITACIONES
 RoomsModel.hasMany(BookingsModel, { foreignKey: 'bookings_roomid' });
 BookingsModel.belongsTo(RoomsModel, { foreignKey: 'bookings_roomid' });
 
-export default BookingsModel;
+export default BookingsModel; // EXPORTA EL MODELO PARA SU USO EN OTROS ARCHIVOS
+

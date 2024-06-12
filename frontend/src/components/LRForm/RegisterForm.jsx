@@ -18,7 +18,7 @@ const RegisterForm = () => {
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
 
-    // Procedimiento para guardar
+    // store: Maneja el registro de un nuevo usuario
     const store = async (e) => {
         e.preventDefault();
         try {
@@ -48,6 +48,7 @@ const RegisterForm = () => {
         }
     };
 
+    // Renderiza el formulario de registro
     return (
         <div className='wrapper'>
             <div className='logo-container'><img src={companyLogo} className='logo' alt='Logo'/></div>
@@ -122,4 +123,3 @@ const RegisterForm = () => {
 };
 
 export default RegisterForm;
-

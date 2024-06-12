@@ -3,13 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import companyLogo from '../assets/logo.png';
 import { FaChevronDown } from 'react-icons/fa';
 
+// WhiteTopBar: Componente que muestra la barra superior con la información del usuario y opciones de navegación
 const WhiteTopBar = ({ isLoggedIn, username, profileImage, userId, onLogout, showBookingsButton }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // toggleMenu: Alterna el estado del menú desplegable
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  // Renderiza la barra superior con el logo, información del usuario y opciones de menú
   return (
     <div className="white-top-bar">
       <div className="logo2-container">

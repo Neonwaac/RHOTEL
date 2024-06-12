@@ -13,6 +13,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    // handleSubmit: Maneja el envío del formulario de inicio de sesión
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -25,7 +26,7 @@ const LoginForm = () => {
             }).then(() => {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('username', response.data.username);
-                localStorage.setItem('userId', response.data.id); // Save the userId in localStorage
+                localStorage.setItem('userId', response.data.id); // Guarda el userId en localStorage
                 localStorage.setItem('profileImage', response.data.profileImage);
                 navigate('/');
             });
@@ -39,6 +40,7 @@ const LoginForm = () => {
         }
     };
 
+    // Renderiza el formulario de inicio de sesión
     return (
         <div className='wrapper'>
             <div className='logo-container'>
@@ -76,4 +78,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-
